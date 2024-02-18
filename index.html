@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Currency Converter</title>
+<style>
+h1
+{
+color:white;
+letter-spacing:3px;
+font-family:verdana,sans-serif;
+text-align:center;
+text-shadow:3px 3px black;
+}
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, black, gray);
+    }
+
+    #div2 {
+        margin-top: 70px;
+        width: 75%;
+        text-align: center; 
+        height: 380px;
+        background: linear-gradient(to right, gray, black);
+        border-radius: 3px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 3, 1);
+    }
+
+    #div3 {
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        color: white;
+        height: 380px;
+		
+    }
+input[type=text] {
+  background-color: black;
+  color: white;
+  opacity:0.5;
+  border:0;
+  height:30px;
+  border-radius:10px;
+}
+input[type=button]
+{
+ height:40px;
+ width:41px;
+ font-size:20px;
+ font-style:sans-serif;
+}
+label{
+font-size:26px;
+}
+select
+{
+font-size:15px;
+height:25px;
+width:120px;
+color:black;
+}
+
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#result {
+    font-size: 22px; 
+   color:white;
+}
+
+
+</style>
+</head>
+<body>
+<h1><i>CURRENCY CONVERTER</i></h1>
+<div id="div1" align="center">
+    <div id="div2">
+      <div id="div3">
+        <form name="form1" align="center">
+         <table  border="0" cellpadding="0" cellspacing="0">
+         <tr>
+            <td width="50%">
+                            <input id="converter" type="text" name="answer"> <br><br>
+                      <input type="button" value="1" onclick="form1.answer.value+=1">
+               <input type="button" value="2" onclick="form1.answer.value+=2">
+                    <input type="button" value="3" onclick="form1.answer.value+=3"> <br><br>
+                           <input type="button" value="4" onclick="form1.answer.value+=4">
+                            <input type="button" value="5" onclick="form1.answer.value+=5">
+                            <input type="button" value="6" onclick="form1.answer.value+=6"><br><br>
+                           <input type="button" value="7" onclick="form1.answer.value+=7">
+                            <input type="button" value="8" onclick="form1.answer.value+=8">
+                            <input type="button" value="9" onclick="form1.answer.value+=9"><br><br>
+                            <input type="button" value="0" onclick="form1.answer.value+=0">
+							<input type = "button" value = "AC" onclick = "form1.answer.value = ' ' " id= "clear" >
+    <br>
+
+                        </td>
+                    <td width="50%">
+                          <label for="from">From:</label>
+                          <select name="from_curr" id="from">
+                                <option value="1">US Dollars ($)</option>
+                                <option value="2">Euros (€)</option>
+                              <option value="3">Pounds (£)</option>
+                               <option value="4">Yen (¥)</option>
+                                <option value="5">Rupees (₹) </option>
+                               <option value="6">Franc (₣)</option>
+                                <option value="7">Dirhams (د.إ)</option>
+                                <option value="8">Won (원)</option>
+                                <option value="9">Dinar (د.ك)</option>
+             </select> <br> <br>
+                         <label for="to">To:</label>
+                        <select name="to_curr" id="to">
+                                  <option value="1">US Dollars ($)</option>
+                                <option value="2">Euros (€)</option>
+                              <option value="3">Pounds (£)</option>
+                               <option value="4">Yen (¥)</option>
+                                <option value="5">Rupees (₹) </option>
+                               <option value="6">Franc (₣)</option>
+                                <option value="7">Dirhams (د.إ)</option>
+                                <option value="8">Won (원)</option>
+                                <option value="9">Dinar (د.ك)</option>
+                  </select><br><br>
+				  <input class="input_button" type="button" value="✔" onclick="convertCurrency()">
+                  </td>
+             </tr>
+             <tr>
+              <td colspan="2">
+            
+                  <div id="result"></div>
+                <br><br>
+        </td>
+              </tr>
+          </table>
+    </form>
+   </div>
+   </div>
+</div>
+<script>
+function convertCurrency() {
+    var amount = parseFloat(document.forms["form1"]["answer"].value);
+    var from_curr = parseInt(document.getElementById("from").value);
+    var to_curr = parseInt(document.getElementById("to").value);
+    var conversionRate = getConversionRate(from_curr, to_curr);
+    var result = amount * conversionRate;
+
+    var symbols = ["Dollars", "Euros", "Pounds", "Yen", "Rupees", "Franc", "Dirham", "Won", "Dinar"];
+    var from_symbol = symbols[from_curr - 1];
+    var to_symbol = symbols[to_curr - 1];
+
+    var resultElement = document.getElementById("result");
+    resultElement.innerHTML =  amount + " " + from_symbol + " " + "=" + " " + result.toFixed(2) + " " + to_symbol;
+   
+}
+
+
+
+    function getConversionRate(from_curr, to_curr) {
+        var conversionRates = {
+            1: { 1: 1, 2: 0.93, 3: 0.79, 4: 150.22, 5: 83.02, 6: 0.88, 7: 3.67, 8: 1332.58, 9: 0.31}, // Dollar to
+            2: { 1: 1.08, 2: 1, 3: 0.86, 4: 161.89, 5: 89.46, 6: 0.95, 7: 3.96, 8: 1436.01, 9: 0.33 }, // Euro to 
+            3: { 1: 1.26, 2: 1.17, 3: 1, 4: 189.31, 5: 104.62, 6: 1.11, 7: 4.63, 8: 1679.32, 9: 0.39 }, // Pound to
+            4: { 1: 0.0067, 2: 0.0062, 3: 0.0053, 4: 1, 5: 0.55, 6: 0.0059, 7: 0.024, 8: 8.87, 9: 0.0021 }, // Yen to 
+            5: { 1: 0.012, 2: 0.011, 3: 0.0096, 4: 1.81, 5: 1, 6: 0.011, 7: 0.044, 8: 16.05, 9: 0.0037 }, // Rupee to 
+            6: { 1: 1.14, 2: 1.05, 3: 0.90, 4: 170.57, 5: 94.26, 6: 1, 7: 4.17, 8: 1513.04, 9: 123.44 }, // Franc to 
+			7: { 1: 0.27, 2: 0.25, 3: 0.22, 4: 40.90, 5: 22.60, 6: 0.24, 7: 1, 8: 362.81, 9: 0.084 }, // Dirham to 
+8: { 1: 0.00075, 2: 0.00070, 3: 0.00060, 4: 0.11, 5: 0.062, 6: 0.00066, 7: 0.0028, 8: 1, 9: 0.00023 }, // Won to 
+9: { 1: 3.25, 2: 3.02, 3:2.58, 4: 488.64, 5: 270.03, 6: 2.86, 7: 11.93, 8: 4334.55, 9: 1 }  // Dinar to 
+    };
+    
+    return conversionRates[from_curr][to_curr];
+}
+</script>
+</body>
+</html>
